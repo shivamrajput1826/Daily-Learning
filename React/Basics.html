@@ -1,0 +1,60 @@
+React is a just javascript code..
+index file->first to get executed whenever the page get loaded
+before moving the code to the browser , this will take the code and do some extra things like
+importing the code and executed
+index.js is the first file to be executed
+ReactDom and react are both part of react-library
+ReactDOM helps in identifying where the root file should be executed in the browser..
+so it locate the root div in index.html file and execute our code there..
+ReactDOM.createRoot basically tells that div with id root will be the root of the application..
+now after that we can call the render method root.render(
+<App />) to tell what will be rendered in the root
+content of the div should be replaced with that
+<App /> content
+./=>please look in the same folder as where it is called
+......
+JSX
+html code inside javascript... jsx is javascript XML because HTML is XML
+JSX will be converted into basic js syntax
+
+How React works
+react allow you to create re-usable adn reactive components consisting of HTML and JS(and Css)
+declarative approach is define the desired target states and let react figure out the actual JS DOM instructions
+JS is doing imperative approach where you give clear instructions to what do
+You define the desired outcome (eg a target UI) and let the library (react) figures out steps
+const para=document.createElement('p');
+para.textContent='this is a paragraph'
+document.getElementBYId('root').append(para);
+
+but in react all you have to define a state and react will take the course in its own hands like in app.js file
+return (
+<p> this is a paragraph</p>
+)
+App.js is a root component of all other file and we kind of making a component tree
+<App /> rendered into a single HTML page
+|
+<Header />
+
+A component in react is just a special javascript function that return JSX codeI
+Important=>You must have a single element per return JSX code
+{} in curly expression, you can create a regular java script expression
+
+for a shell ,
+first to render a component inside a component you have to use props.children and for classes use class you wanna
+apply +props.className which is default class which has been applied
+
+
+const Card = (props) => {
+const classes = "card " + props.className;
+return <div className={classes}>{props.children}</div>;
+};
+
+basically under the hood react convert the jsx code like this......
+return React.createElement(
+"div",
+{},
+React.createElement("h2", {}, "let's get started"),
+React.createElement(ExpenseInitial, { expenses: expenses })
+);
+
+and thats why we have one wrapper....
