@@ -1,0 +1,49 @@
+Wrapping other component , we can access through props.children
+since we have a wrapper component, the className applied to it like <card className=""/> is invalid , the className 
+will not be applicable so add the extra className through props in the wrapper component.
+  <div className={`${styles.card} ${props.className}`}>{props.children}</div>
+  );
+In forms, when we click on add submit, the enteredAge and enteredname will not be automatically reflected there.
+U need to make sure the value in the input field is set to the state in the useState.
+const AddUser = () => {
+  const [enteredUsername, setEnteredUsername] = useState("");
+  const [enteredUserage, setEnteredUserage] = useState("");
+  const addUserHandler = (e) => {
+    e.preventDefault();
+  };
+  const userNameChangeHandler = (e) => {
+    setEnteredUsername(e.target.value);
+  };
+  const userAgeChangeHandler = (e) => {
+    setEnteredUserage(e.target.value);
+    console.log(enteredUserage, enteredUsername);
+  };
+  const buttonHandler = () => {
+    setEnteredUserage("");
+    setEnteredUsername("");
+  };
+
+  return (
+    <Card className={styles.input}>
+      <form onSubmit={addUserHandler}>
+        <label htmlFor="username">UserName</label>
+        <input
+          id="username"
+          type="text"
+          value={enteredUsername}
+          onChange={userNameChangeHandler}
+        />
+        <label htmlFor="age">Age(Years)</label>
+        <input
+          id="age"
+          type="number"
+          value={enteredUserage}
+          onChange={userAgeChangeHandler}
+        />
+        <Button type="submit" onClick={buttonHandler}>
+          Add user
+        </Button>
+      </form>
+    </Card>
+  );
+};

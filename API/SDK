@@ -1,0 +1,29 @@
+An API request consist of operations(get,post,put),parameters(optional maybe some file ) and endpoints(the URLS) ..
+an sdk(software development kit) is a set of tools for developers that offers building blocks for the creation of 
+an application instead of developers starting from scratch..
+
+An SDK is like pre-made pizza dough. Imagine you want to bake a fancy pizza but don’t have the skills to do so. You might opt for a pre-made pizza dough mix. The mix already has all the main ingredients measured out and only requires you to add the final steps. 
+
+Essentially, SDKs are instructive bits of code around an API for a specific purpose.
+
+Now, imagine you want to bake pizza dough without the pre-made mix. You need a recipe with instructions. Here, an API is the recipe, as it’s the set of programming instructions that give access to an application
+
+
+How does an API work?
+At the very base level, an API is a messenger that sends a request to another data or service provider and then delivers the information or action response back to your platform. 
+For example, you (Client) order a meal at a cafe, but you don’t tell the kitchen yourself. The waiter (API) sends your order (Data request) to the kitchen (Server). The order is received through an “expected format,” as the kitchen expects the “order” to look a certain way. Then, the meal (Data) is made and returned to you through the waiter.
+
+How does an SDK work?
+An SDK will give a tool kit of resources and helpers that are opinionated to a specific use case to create an application from (almost) the start.
+For example, imagine you have to put together a bicycle. You will need a whole kit to put it together and the tools to assemble it. Moreover, to make sure you’re doing everything in order and correctly, you will use an instruction manual and the kit pieces themselves.
+
+An SDK is like building a bicycle — it provides the tools, guides, documents, and code samples you need to build a specific application. 
+
+*In the case of SDKs, developers are given the tools and instructions to build what they need. They don’t need to spend time researching code, pieces, and the sequence that goes into building a certain feature. For APIs, no feature needs to be built, as it simply connects two applications through integration which removes time in development.*
+
+API vs. SDK: Which should you use and when?
+The chances are that you will probably use both API and SDKs in your product development. The “when” will depend on your product’s growth and needs. 
+When you want to build and customize an application from scratch and integrate it into your product, your developers will use an SDK.
+SDKs can use APIs if external communication with another app is required. 
+You would use an API if you don’t need to create a feature in your software — you simply need to connect two applications. APIs are easy to integrate with a couple of clicks, and no further app development is required.  
+For example, imagine you want to improve user engagement in your e-commerce app. You can improve engagement by building an activity feed in your app and using chats to connect with customers. So, you decide to build an activity feed for users with Stream’s activity feed SDK and connect with users through Stream’s chat API. By doing so, customers are able to have all their questions answered in real-time and be part of a community.

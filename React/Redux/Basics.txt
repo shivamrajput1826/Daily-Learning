@@ -1,0 +1,183 @@
+A state management system for cross component or app-wide state.
+1)Local State=>state that belongs to a single component(useState,useReducer)
+2)Cross-component State(state that affect multiple components)=>(requires prop chains or prop drilling)
+3)App-wide State(State that affects the entire app(most/all components))
+Disadvantages of react-context
+1)Complex setup/management=>In more complex apps, managing React Context can lead to deeply nested JSX code and/ or
+huge "context provider components"
+2)Performance=> context is good for low frequency changes,not for high frequency changes..
+
+How Redux works...
+Its having one central data(state) store..
+central data--------subscription----->component---dispatch--->actions-=forward to reducer functions..             
+  |                (getter)                       (action)
+  |
+  mutates(=changes  ) store data|
+  |
+  |
+  Reducer function(mutation for now)
+components directly never manipulate the store data..
+For mutations we require reducer functions..
+const redux = require("redux");
+const counterReducer = (
+  state = {
+    counter: 0,
+  },
+  action
+) => {
+  return {
+    counter: state.counter + 1,
+  };
+};
+const store = redux.createStore(counterReducer);
+const counterSubscriber = () => {
+  const latestState = store.getState();
+
+  console.log(latestState);
+};
+
+
+
+store.subscribe(counterSubscriber);
+store.dispatch({ type: "increment" });
+
+
+console output=>2 because for the first time the counter=0,the by default reducer will trigger and counter=1 and when
+action "increment" is triggered it will go back to 2;
+
+it's the reducer function which will produce new snapshot
+The reducer will produce a new snapshot whenever a action reaches to it
+And when we run this code for the first time,
+the reducer will also be executed with a default action,
+so to say, that should spit out the initial state.
+reducer function contains two parameters(prev state , action that we dispatch) and it must return a new object...
+And therefore a reducer function should be a pure function.
+Which basically means that the same inputs,
+the same values for inputs always should produce
+exactly the same output.
+And there should be no side effects inside of that function.
+So you must not send a HTTP request
+or write something to local storage
+or fetch something from local storage there.
+Instead, a reducer should really just be a function
+that takes the given inputs, which are provided by Redux
+and then produces the expected output, a new state object.
+
+So does subscriber is a function here,
+which does not get any parameters,
+but where we then inside of the function
+can reach out to the store and call, getS state.
+Get state is a method which is available on the store
+created with create store.
+So this subscription function will soon be triggered
+whenever the state changes.
+
+Well, we are creating a story here
+and that store has a counter reducer as it needs to,
+and in that reducer, we return a state object,
+which sets the counter to the old state counter plus one.
+The problem is that when that store is initialized,
+Redux will execute this reducer for the first time.
+So this code will then run when the store is created.
+The problem is that at this point of time,
+state is undefined.
+We have no existing state because it's the first time
+this is executing.
+That's why we should give state this state parameter,
+a default value, which is assumed
+if it would otherwise be undefined.
+So that for the first time this runs, it does have a value.
+If it then runs thereafter and we do have an existing state,
+the default value will not be used,
+but here for the first time,
+we wanna have a fallback default value which will be used.
+And here I'll set my default value
+to an object which has a counter property,
+which is zero initially.
+And dispatch is a method which dispatches an action.
+
+Now an action is a JavaScript object.
+It's a JavaScript object with a type property,
+which acts as an identifier.
+Typically you use a string here
+and then this should be a unique string
+so that every action, every distinct action,
+which you dispatch leads to different things
+being done in the reducer.
+
+const redux = require("redux");
+const counterReducer = (
+  state = {
+    counter: 0,
+  },
+  action
+) => {
+  if (action.type === "increment") {
+    return {
+      counter: state.counter + 1,
+    };
+  }
+  if (action.type === "decrement") {
+    return {
+      counter: state.counter - 1,
+    };
+  }
+  return {
+    counter: state.counter + 1,
+  };
+};
+const store = redux.createStore(counterReducer);
+const counterSubscriber = () => {
+  const latestState = store.getState();
+
+  console.log(latestState);
+};
+
+store.subscribe(counterSubscriber);
+store.dispatch({ type: "increment" });
+store.dispatch({ type: "decrement" });
+
+output would be 2 and 1
+react-redux will be used for connection react to redux properly
+
+Now for Provider we can use <Provider store={store}><App/></Provider>
+
+Now in the component
+import classes from "./Counter.module.css";
+import { useSelector } from "react-redux";
+const Counter = () => {
+  const toggleCounterHandler = () => {};
+  const counter = useSelector((state) => state.counter);
+  return (
+    <main className={classes.counter}>
+      <h1>Redux Counter</h1>
+      <div className={classes.value}>{counter}</div>
+      <button onClick={toggleCounterHandler}>Toggle Counter</button>
+    </main>
+  );
+};
+
+export default Counter;
+
+useSelector is used for selecting a specific 
+
+the values returned from the action state will not merge but overwrite it there..
+You should never mutate the existing state always return a new state
+Difference Between reference and primitive
+ Primitive values are copied by values 
+ var name='Max'
+ console.log(name); //Max
+ var secondName=name;
+ console.log(secondName) //Max
+  
+  name='chris'
+  console.log(secondName) //Max
+
+  Obejcts are reference type
+
+  primitive data type are stored in stack(not able to store a lot of information and is really fast)
+  reference type(object,array)=>stored in heap and is relatively slow but can store a lot of information..
+
+  when you copied  a new value in primitive type , it is stored in stack 
+  when you copied a new value in reference type,the address is stored in heap and same address is now pointed 
+  to the stack 

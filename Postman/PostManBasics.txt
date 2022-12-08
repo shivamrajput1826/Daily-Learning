@@ -1,0 +1,18 @@
+https://simple-books-api.glitch.me/status gives me the status ok or not
+Save the API and make a collection 
+can set a variable name
+initial value which can be shared with anyone
+current value which is private to you
+query-params=> ?city=jind
+path params=>{{baseURL}}/:bookID sent as {{baseURL}}/1 or whatever you put the value there
+Some APi require access token, for posting anything
+<>
+DOubt=>Is access token not required in get request,only require in post request....
+<>
+you post a request with having some authurization in the header file...
+steps 
+1)we sent a post request, the authurization is not there and it throws an error
+2)we sent  a post request for authorization and get an access token..
+3)Now we mention the access token in the header of the post request and get a response.
+
+Postman is not used for user interaction, performance testing, security testing

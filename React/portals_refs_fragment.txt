@@ -1,0 +1,122 @@
+To eradicate the adjacent root level error, we use fragments
+Whenever we work on any JSX array, react wants a key element
++>>>>React dom is basically an adapter for the react. React does not care about whether it should be in browser
+or any kind of things , react dom take care of it
+
+<> can be equal to React.Fragment>
+which is basically a wrapper component
+const wrapper=(props)=>{
+    return props.children
+}
+Project setup should support <></>
+
+React Portals
+Sometimes the overlays or wrapper component are nested inside the different divs while it should be nested 
+inside the main div root or simply we want to position the divs according to ourselvews
+steps:
+1)Inside index.html,  <div id="backdrop-root"></div>
+  <div id="overlay-root"></div>
+2)Inside the react element
+const BackDrop = (props) => {
+  return <div className={classes.backdrop} onClick={props.onConfirm} />;
+};
+const ModalOverlay = (props) => {
+  return (
+    <Card className={classes.modal}>
+      <header className={classes.header}>
+        <h2>{props.title}</h2>
+      </header>
+      <div className={classes.content}>
+        <p>{props.message}</p>
+      </div>
+      <footer className={classes.actions}>
+        <Button onClick={props.onConfirm}>Okay</Button>
+      </footer>
+    </Card>
+  );
+};
+
+const ErrorModal = (props) => {
+  return (
+    <>
+      {ReactDom.createPortal(
+        <BackDrop onConfirm={props.onConfirm} />,
+        document.getElementById("backdrop-root")
+      )}
+      {ReactDom.createPortal(
+        <ModalOverlay
+          title={props.title}
+          message={props.message}
+          onConfirm={props.onConfirm}
+        />,
+        document.getElementById("overlay-root")
+      )}
+    </>
+  );
+};
+
+export default ErrorModal;
+>>>>>>>>Remember to use right naming convention
+
+React Refs=> If you want a read a value not manipulating the DOM, refs are better than state because in this scenirio
+we dont have to write extra code..
+const AddUser = (props) => {
+  const [enteredUsername, setEnteredUsername] = useState("");
+  const [enteredUserage, setEnteredUserage] = useState("");
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+  const [error, setError] = useState();
+  const addUserHandler = (e) => {
+    e.preventDefault();
+    const enteredName = nameInputRef.current.value;
+    const enteredAge = ageInputRef.current.value;
+    if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
+      setError({
+        title: "Invalid Input",
+        message: "Please enter a valid name and age (non-empty values).",
+      });
+      return;
+    }
+    if (+enteredAge < 1) {
+      setError({
+        title: "Invalid Age",
+        message: "Please enter a valid age",
+      });
+      return;
+    }
+    props.onAddUser(enteredName, enteredAge);
+
+    setEnteredUserage("");
+    setEnteredUsername("");
+  };
+
+  const errorHandler = () => {
+    setError(null);
+  };
+
+  return (
+    <>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
+        />
+      )}
+      <Card className={styles.input}>
+        <form onSubmit={addUserHandler}>
+          <label htmlFor="username">UserName</label>
+          <input id="username" type="text" ref={nameInputRef} />
+          <label htmlFor="age">Age(Years)</label>
+          <input id="age" type="number" ref={ageInputRef} />
+          <Button type="submit">Add user</Button>
+        </form>
+      </Card>
+    </>
+  );
+};
+ref is attached to input element
+
+controlled vs uncontrolled 
+=>>>>>Using ref to read DOM element, we call use it uncontrolled component
+previous approach where state is controlled with state is called controlled components.....

@@ -1,0 +1,2 @@
+A single microservice contains all the routing,middlewares,business logic ,database access to implement one 
+feature of an app so that if all other features crashes,this feature remains there.

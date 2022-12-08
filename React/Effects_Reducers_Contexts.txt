@@ -1,0 +1,260 @@
+useEffect(()=>{
+
+},[])=> it runs on onMount
+[] basically takes the depedency which changes ,and the code runs when such depedency changes...
+[] should not be used for useState setFunctions, any variable or functions outside the function scope since 
+it will not be rendered the component again and the fetch,other side effects as they will not related to component
+You DON'T need to add state updating functions (as we did in the last lecture with setFormIsValid): 
+React guarantees that those functions never change, hence you don't need to add them as dependencies
+ (you could though)
+
+You also DON'T need to add "built-in" APIs or functions like fetch(), localStorage etc (functions and 
+features built-into the browser and hence available globally): These browser APIs / global functions
+ are not related to the React component render cycle and they also never change
+
+You also DON'T need to add variables or functions you might've defined OUTSIDE of your components 
+(e.g. if you create a new helper function in a separate file): Such functions or variables also are not created
+ inside of a component function and hence changing them won't affect your components (components won't be 
+ re-evaluated if such variables or functions change and vice-versa)..
+
+ useEffect(()=>{
+    return ()=>{}
+ },[])
+ return will run before every execution except the first execution and when the component get unMounted..
+ useEffect(()=>{
+  console.log()
+ })=== console.log it runs after every component renders cycle..
+ other function may create infinite loop...
+UseReducers=>
+1)update a state which depends on another state because sometimes the dependent states does not have been updated 
+and it may give wrong values.
+2)When it is dependent on two or three states
+const[state,dispatch]=UseReducer(reducerFn,initialState,initFn);
+state=>a state snapshot used in the component re-render/re-evaluation cycle
+dispatchFn=>a function that can be used to dispatch a new action(i.e trigger an update of the state)
+reducerfn=>(prevState,action)=>newState
+a function that is triggered automatically once an action is dispatched (via dispatchFn()) -it receives the latest 
+state snapshot and should return the new, updated state
+initialState=>initialState
+initFn=>a function to set the initial state programmatically..
+
+you can basically set an action and based on the action that you have passed the state get updated
+function reducer(state,action){
+   // state=>the current state
+   // action=> the action which is dispatched
+   switch (action.type){
+      case 'increment':
+      return {count:state.count+1}
+      case 'decrement:
+      return {count:state.count-1}
+      default: return state
+   }
+ 
+}
+this reducer function can be used outside the component because it is not dependent on other states
+const [state, dispatch]=UseReducer(reducer,{count:0})====const []=useState(0)
+function increment(){
+   dispatch({type:increment})
+}
+function decrement(){
+   dispatch({type:decrement})
+}
+
+example 2)
+const [todos,dispatch]=UseReducer(reducer,[])
+import React, { useState, useReducer } from "react";
+
+import Card from "../UI/Card/Card";
+import classes from "./Login.module.css";
+import Button from "../UI/Button/Button";
+const emailReducer = (state, action) => {
+  // console.log("actions", action);
+  if (action.types === "USER_INPUT") {
+    return { value: action.val, isValid: action.val.includes("@") };
+  }
+  console.log("actions", action);
+  if (action.types === "INPUT_BLUR") {
+    return { value: state.value, isValid: state.value.includes("@") };
+  }
+  return { value: "", isValid: false };
+};
+const passwordReducer = (state, action) => {
+  if (action.types === "USER_PASSWORD") {
+    return { value: action.val, isValid: action.val.trim().length > 6 };
+  }
+  if (action.types === "PASSWORD_BLUR") {
+    return { value: state.value, isValid: state.value.trim().length > 6 };
+  }
+  return { value: "", isValid: false };
+};
+
+const Login = (props) => {
+  // const [enteredEmail, setEnteredEmail] = useState("");
+  // const [emailIsValid, setEmailIsValid] = useState();
+  // const [enteredPassword, setEnteredPassword] = useState("");
+  // const [passwordIsValid, setPasswordIsValid] = useState();
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [emailState, emaildispatch] = useReducer(emailReducer, {
+    value: "",
+    isValid: null,
+  });
+  const [passwordState, passwordDispatch] = useReducer(passwordReducer, {
+    value: "",
+    isValid: null,
+  });
+
+  const emailChangeHandler = (event) => {
+    emaildispatch({ types: "USER_INPUT", val: event.target.value });
+
+    setFormIsValid(
+      event.target.value.includes("@") && passwordState.value.trim().length > 6
+    );
+  };
+
+  // useEffect(() => {
+  //   setFormIsValid(
+  //    emailState.value.includes("@") && emailState.value.trim().length > 6
+  //   );
+  // }, [enteredEmail, enteredPassword]);
+
+  const passwordChangeHandler = (event) => {
+    passwordDispatch({ types: "USER_PASSWORD", val: event.target.value });
+    setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
+  };
+
+  const validateEmailHandler = () => {
+    emaildispatch({ types: "INPUT_BLUR" });
+  };
+
+  const validatePasswordHandler = () => {
+    passwordDispatch({ types: "PASSWORD_BLUR" });
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    props.onLogin(emailState.value, passwordState.value);
+  };
+
+  return (
+    <Card className={classes.login}>
+      <form onSubmit={submitHandler}>
+        <div
+          className={`${classes.control} ${
+            emailState.isValid === false ? classes.invalid : ""
+          }`}
+        >
+          <label htmlFor="email">E-Mail</label>
+          <input
+            type="email"
+            id="email"
+            value={emailState.value}
+            onChange={emailChangeHandler}
+            onBlur={validateEmailHandler}
+          />
+        </div>
+        <div
+          className={`${classes.control} ${
+            passwordState.isValid === false ? classes.invalid : ""
+          }`}
+        >
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={passwordState.value}
+            onChange={passwordChangeHandler}
+            onBlur={validatePasswordHandler}
+          />
+        </div>
+        <div className={classes.actions}>
+          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+            Login
+          </Button>
+        </div>
+      </form>
+    </Card>
+  );
+};
+
+export default Login;
+
+In the previous lecture, we used object destructuring to add object properties as dependencies to useEffect().
+
+const { someProperty } = someObject;
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someProperty]);
+This is a very common pattern and approach, which is why I typically use it and why I show it
+ here (I will keep on using it throughout the course).
+
+I just want to point out, that they key thing is NOT that we use destructuring but that we pass 
+specific properties instead of the entire object as a dependency.
+
+We could also write this code and it would work in the same way.
+
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someObject.someProperty]);
+This works just fine as well!
+
+But you should avoid this code:
+
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someObject]);
+Why?
+
+Because now the effect function would re-run whenever ANY property of someObject changes - 
+not just the one property
+ (someProperty in the above example) our effect might depend on.
+
+
+useState vs useReducer
+Generally, you all know when you need useReducer()(->when using useState() becoems cumbersome or you are getting 
+a lot of bugs/unintended behaviour)
+
+useState=>
+1)The main state management tool
+2)Great for independent pieces of state/data
+3)Great if state updates are easy and limited to few kinds of updates..
+useReducer=>
+1)Great if you need more power 
+2)Should be considered if you have related pieces of state/data
+3)Can be helpful if you have more complex state updates...
+4)Mainly use for forms...
+
+React conteext api..
+Its basically pass on the data from one component to another without prop handling... or lifting up
+const AuthContext=React.createContext() creates a context object which will be used throughout the app.
+After creating a context there are two things that we need to do ..
+1)provide it=>hey this is our context=> it means you wrap in JSX code all the components that should be able to tap 
+that context.Any component that not wrapped will not be able to listen
+AuthContext is a object 
+now we import it in a different component...we can provide it like a component..
+<AuthContext.Provider value={{
+  isLoggedIn:false
+  onLogOut:logOutHandler
+}}></AuthContext.Provider> and we can wrap around other components inside the AuthComponent
+not only state is passed but also the function is passed..
+and now all the component and their descendent component will have access to all those context..
+2)consume it=>hey we can now consume it for various things.
+two ways
+better approach=> const ctx=useContext(AuthContext);
+when to use=>When we are forwarding a lot of component || you are forwarding to a component that does a very specific
+thing Like for example, the Navigation
+where this button will always log the user out.
+
+Building a Using a Custom context Provider Component;
+
+React Context Limitation=>{
+  props for configuration and context for state management across component or entire app
+  Not optimized for high frequency changes..(eg for authenticity, state change happen less)
+  React context also should not be used to replace all component communication and props.
+}
+
+Learning the rules of hook..
+1)Only call react hooks in react functions=>(react component functions and custom hooks)
+2)Only call react hooks at the top level(dont call them in nested functions or dont call them in any block statements)
+
+Forward refs=>
+useRef=> left....

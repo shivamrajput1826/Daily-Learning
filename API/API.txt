@@ -1,0 +1,49 @@
+API-application programming interface
+-> It is a set of definitions and protocols for building and integrating application software...
+-> If you want to interact with a computer ir system to retrieve information or perform a function, an API helps you 
+   to communicate or act as a mediator to the system to fulfill the request...
+
+REST- representational state transfer
+-> a rest api is an application programming interface that conforms to the constraint of REST architectural style 
+   and allows for interaction with REstfful web services...
+->REST is a set of architectural constraint, not a protocol or standard.
+->When a client request is made through restful api, it transfers the representation of the state of resources in 
+ (most commonly in JSON format which is understable both by humans and machine) to the requester or endpoint.
+->Headers and parameters are also important in the HTTP methods of RestFul api HTTP request, as they contain 
+  important identifier information as to the request;s metadeta, authorization, Unifrom resource identifier, caching
+  ,cookies etc.There are request headers and response header, each having their own http connection information 
+  and status codes..
+----> For being restful, following criteria must be satisfied
+     1)A client-server architecture made up of clients,servers and resources with request managed through HTTP.
+     2)Stateless client-server communication, meaning no client information is stores between getRequests and 
+       each request is separate and unconnected
+     3)Cacheable data that streamlines client-server interactions
+     4)A uniform interface between components so that information is transferred in a standard format.This requires
+       i)resource requested are identifiable and separate form representations sent to the clients
+       ii)resources can be manipulated by the client via the representation they receive because the representation 
+        contains enough information to do so.
+       iii)self-descriptive message returned to the client have enough information to describe how the client should
+          process it
+       iv)hypertext/hypermedia is available, meaning that after accessing a resource the client should be able to use
+         hyperlinks to find all other currently available actions they can take
+      5)A layered system that organizes each type of servers(those responsible for security,load balancing etc.)
+        involved the retrieval od requested information into hierarchies,invisible to the clients
+      6)Code-on-demand(optional):the ability to send executable code from the server to the client when requested
+       extending client functionality.
+
+       API is a sort of contract which defines how it is expected it to be used and it defines what you can expect 
+       to receive by using it.
+       Framework provides an API that allow you to extend what has been provided to make it your own.
+
+       When a web client send a request to a web server ,an Http request is sent, http where last term is protocol
+       is like a contract , it is set and request happen
+       In http request it has some uri (uniform resource identifier like www.google.com)+ a verb(get,post,put,patch)
+        Now the server received the request transferred from the client (Transfer)
+        Generates a webpage and sent a response to the client, the response made up of body which is made of html
+        hypertext is a text that can link to other texts 
+        http is a stateless protocol ,Once that request receives a response, it all done.If you want to keep some 
+        sort of state ,your client has to manage itself and set it up with each new requests
+
+
+HTTP Verb	CRUD	E
+        

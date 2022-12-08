@@ -1,0 +1,41 @@
+JWT stands for json web tokens
+Idea is to communicate between two parties securely.
+When you send a request a server, it gives you a response based on who you are, so everytime you ask a server And
+it provide a dynamic response and it also ask who you are...because http is a stateless protocol and it does not
+store any kind of state... but in websites, we see that once we login the page... it automatically saves the data
+and it does not asked it again... 
+->Now basically what happens when a new User login to the page its information is stored in the cookies 
+in the form of a token and whenever a user ask a new request, these tokens get attached to them... this is session
+token... 
+but now since we have multiple servers 
+we have a shared cache(Redis) where they can look up for information
+Now, one Point of failure is that if redis instance goes down, everything goes down now...
+
+So redis approach is not followed generally, they follow sticky session where load balancer learns which server 
+to redirect a particular user as it remember which server has its information.
+
+In jwt, instead of returning a token, we return a json information of the user and next time it comes back, it 
+can show the information to him..
+Everytime a client sents a requests with the json token representing this is who I am etc.. and the server check
+whether he has successfully authenticate early or not
+
+Session token are reference tokens while jwt are value tokens
+
+Structure of JWT..
+ JWT consists of three parts: a header, payload, and signature.
+Header
+The header typically consists of two parts: the type of the token, which is JWT, and the algorithm that is used, 
+such as HMAC SHA256 or RSA SHA256. It is Base64Url encoded to form the first part of the JWT.
+
+Payload
+The payload contains the claims. There is a set of registered claims, for example: iss (issuer), 
+exp (expiration time), sub (subject), and aud (audience). These claims are not mandatory but 
+recommended to provide a set of useful, interoperable claims. The payload can also include extra attributes 
+that define custom claims, such as employee role. Typically, the subject claim is used to create the OpenID 
+Connect user subject. However, the Liberty JVM server can be configured to use an alternative claim. 
+The payload is Base64Url encoded to form the second part of the JWT.
+
+Signature
+To create the signature part, the encoded header and encoded payload are signed by using the signature 
+algorithm from the header. The signature is used to verify that the issuer of the JWT is who it says it is and 
+to ensure that the message wasn't changed along the way.

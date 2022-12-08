@@ -1,0 +1,26 @@
+Middleware comes in middle of the request and response cycle of the node.js execution.It also provides access
+to many functions like request and response objects with the next function of the cycle..
+
+Tasks that can be performed with the middleware function
+1)Making quick changes to the request and response objects
+2)Calling the next middleware immediately as per the stack
+3)Effectively executing any code
+4)Automatically terminating the request-response cycle
+
+When the active middleware function doesn’t stop the request-response cycle, it will call the next() function to
+ pass on the control to the next middleware function, making sure that
+ none of the requests are pending.
+
+what is next()
+next() is a middleware function that calls for the control of the another middleware once the code is completed.
+You can wait till the network operations are completed before you go to the next step. As with the functionality
+ of route handlers, a middleware will ensure the receipt of the request and response objects effortlessly.
+
+ Some of the tasks performed by the middleware function.
+ 1)Completing the request and response cycle 
+ 2)Executing the codes
+ 3)Calling the subsequent middleware function in the line
+ 4)Making necessary changes to the requests and response object as per the requirement
+
+ Middleware in node.js
+ 

@@ -1,0 +1,21 @@
+An Api gateway is an API management tool that sits between a client
+and a collection of backend services.
+
+An api gateway act as a reverse proxy to accept all application 
+programming interface(API) calls,aggregate the various required
+services to fulfill them, and return the appropriate result.
+
+You want to protect your APIs from overuse and abuse, so you use an authentication service and rate limiting. 
+
+You want to understand how people use your APIs, so you’ve added analytics and monitoring tools.
+
+If you have monetized APIs, you’ll want to connect to a billing system.
+
+You may have adopted a microservices architecture, in which case a single request could require 
+calls to dozens of distinct applications.
+
+Over time you’ll add some new API services and retire others, but your clients will still want to 
+find all your services in the same place.
+
+When you have a lot of microservices in a single application, an API gateway provides you the platform for rendering 
+all the apis through a single centre.. 

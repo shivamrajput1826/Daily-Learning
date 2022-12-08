@@ -1,0 +1,76 @@
+props.expenses.map((item) => (
+          <ExpenseItem
+            key={item.id}
+            title={item.title}
+            amount={item.amount}
+            date={item.date}
+          />
+this is how you do the rendering,
+
+->spread operator can also be done to arrays as well
+ setExpensesData((prevState) => {
+      return [...prevState, newExpenseData];
+    });
+
+->Key prop is added to any HTML component to make sure that it identify 
+ and when the dom get updated(basically a new item get added) react render this new item as the last item in this list
+ of div's and updates all items and replace their content,such that it again matches the order of the items in my 
+ Array. This is happening because to React all these items look similar and it only sees that my Array changed
+that it's now longer than before. And hence it simply renders an additional div and it adds that at the end.And
+then it simply walks through all the items and updates the content inside of every item to match the Array 
+content again.Since it is visiting all other divs,performance wise not great.. and can lead to bugs as well
+Then if, for example, our first item, if it has a certain state if we add a new item the old first item would be 
+overwritten with the new first item. Hence any state changes we might've had in there would be lost.
+It currently simply checks the length of the Array and then has a look at the number of items 
+that were already rendered.The individual items all look similar to React though so it can't know where 
+a new item should be added or anything like that.That's why we get this warning because we have a way
+of telling react where a new item it should be added.
+
+->solutions => add a new identifier in the key and it will now can differntiate between them.
+
+-> const newExpenseData = props.expenses.filter((item) => {
+    return item.date.getFullYear().toString() === filteredYear;
+  }); 
+  when you want a array to get returned..
+
+  conditional rendering
+  Use ternary or && or use make block of code outside the return block
+
+  let expenseContent = <p>No Content Found</p>;
+  if (newExpenseData.length > 0) {
+    expenseContent = newExpenseData.map((item) => (
+      <ExpenseItem
+        key={item.id}
+        title={item.title}
+        amount={item.amount}
+        date={item.date}
+      />
+    ));
+  }
+Dynamic Style= style={{ height: barFillHeight }}
+
+Both for..of and for..in statements iterate over lists; the values iterated on are different though, for..in returns a list of keys on the object being iterated, whereas for..of returns a list of values of the numeric properties of the object being iterated.
+
+Here is an example that demonstrates this distinction:
+
+let list = [4, 5, 6];
+
+for (let i in list) {
+   console.log(i); // "0", "1", "2",
+}
+
+for (let i of list) {
+   console.log(i); // "4", "5", "6"
+}
+Another distinction is that for..in operates on any object; it serves as a way to inspect properties on this object. for..of on the other hand, is mainly interested in values of iterable objects. Built-in objects like Map and Set implement Symbol.iterator property allowing access to stored values.
+
+let pets = new Set(["Cat", "Dog", "Hamster"]);
+pets["species"] = "mammals";
+
+for (let pet in pets) {
+   console.log(pet); // "species"
+}
+
+for (let pet of pets) {
+    console.log(pet); // "Cat", "Dog", "Hamster"
+}
