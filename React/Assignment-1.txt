@@ -8,7 +8,7 @@ U need to make sure the value in the input field is set to the state in the useS
 const AddUser = () => {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredUserage, setEnteredUserage] = useState("");
-  const addUserHandler = (e) => {
+  const addUserHandler = (e) => 
     e.preventDefault();
   };
   const userNameChangeHandler = (e) => {

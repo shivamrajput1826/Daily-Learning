@@ -1,0 +1,100 @@
+React.Memo=>
+Applied in a  child component export
+===>> export default React.Memo(DemoApp)..
+
+It tells React that for this component,
+which it gets as a argument,
+React should look at the props this component gets
+and check the new value for all those props
+and compare it to the previous value those props got.
+And only if the value of a prop changed,
+the component should be re-executed and re-evaluated.
+And if the parent component changed
+but the prop values for that component here did not change,
+component execution will be skipped.
+
+********Why aren't we using that on all components if it allows us to optimize them?
+Because this optimization comes at a cost.
+The memo method here tells React that whenever the App component changed, it should go to this component here and compare the new prop values to the previous prop values,so therefore React needs to do two things.
+It needs to store the previous prop values,and it needs to make that comparison.
+And that, of course, also has its own performance cost.
+And it, therefore, greatly depends on the component you're applying this towhether it's worth it or not because you're trading the performance cost of re-evaluating the component for the performance cost of comparing props.And it's impossible to say which cost is higher because it depends on the number of props you have and on the complexity of your component
+and the number of child components your component has.
+
+Of course, React.memo can be a great tool
+if you have a huge component tree
+with a lot of child components because when the parent component change, all child and nested child components get updated..And on a high level in the component tree,
+you can avoid unnecessary re-render cycles for the entire branch of the component tree.
+
+Important**
+Keep in mind that this App component is just a function in the end,and it re-executes like a normal JavaScript function because it is a normal JavaScript function if your state changes.
+The only magic thing here is that the function's going to be called by React
+and not by you.But then, it still executes like a normal function,which means all that code executes again,and that has one important implication.
+Of course, this function which you pass to the Button is re-created.This is now a brand new function for every render or every execution cycle of the App function
+because in the end it's just a normal constant
+which we recreate.All that code in here is executed again,
+so, of course, a new function is created.
+This is not the same function all the time.It's a function that does the same thing.
+But technically to JavaScript, it's a brand new function for every time the App function is being executed.That's, by the way, also true for false being passed to DemoOutput.
+
+Previously, I said that this never changes,because in js
+false===false
+but [1,2,3]!==[1,2,3]
+
+becasue string,boolean are primitive type stored in stack while array,object are referce type stored in memory..
+
+Now, two objects, even if they have the same content,are never equal in JavaScript when compared like this.And, therefore, React.memo finds out that the value changed just because of how JavaScript works.Now, that is really important to understand.
+I know it's a common gotcha and something a lot of developers, even more experienced ones, are struggling with.That's why I'm emphasizing it like this.This is crucial to understand and to get right.Now, of course, as a result of that,does this mean that React.memo is useless
+for components that receive objects or arrays or functions through their props?
+No, thankfully not.
+
+
+
+UseCallBack==>>>
+We can make React Memo work for prop values
+that are objects as well.
+
+Use Callback is a hook that allows us to basically store a function across component executions.
+So it allows us to tell React that we wanna save a function and that this function should not be recreated with every execution.With that one in the same function object is stored
+so one in the same place in memory and therefore the comparison does work.
+
+it will save a function of our choice basically somewhere in React's internal storage and we'll always reuse that same function object then when this component function executes.
+
+const function=useCallback(()=>{
+	
+},[])
+
+With that one in the same function object is stored
+so one in the same place in memory
+and therefore the comparison does work.
+
+===> useCallback basically stores the function in a react storage ..
+
+
+===>> why do we need dependencies in useCallback
+  1)Functions are closures
+  In this case, the allowed toggle variable,that is a variable or a constant
+  coming from the app function and I'm using it inside of this function. Therefore JavaScript closes over that constant and basically stores that constant for that function definition.
+That means the next time this function here,the toggle paragraph handler, is executed,
+this stored variable will be used.And with that, the value of that variable
+at the point of time, it was stored.This generally is perfect because this allows us to use
+variables from outside the function, in the function,and call that function at any point of time we want,which is exactly what we want for a functionthat we bind to a button.
+The problem with that, and with useCallback however is,that with useCallback we're telling React
+to store that function,and exactly that function somewhere in memory.
+Now, when the app function is re-evaluated and reexecuted because the toggle state changed,
+then React will not recreate this function because we're using useCallback where we told React
+that we don't want to recreate it under all circumstances.So therefore the allow toggle value
+React stored for our function,is still the old allow toggle value from the first time the app component was executed,not the most recent one because JavaScript, as I just explained,
+stored allow toggle this constant when it created that function here.
+And that's of course a gotcha here,that's a problem.There are cases where we actually want
+to recreate a function because values being used in that function that are coming from outside the function might have changed.
+And here we have such a case.So here we would want to add allow toggle as a dependency
+in our dependency array.And that tells React that we generally wantto store that function.
+But, whenever allow toggle changes and it has a new value, we want to recreate that function
+and store that new recreated function.And this ensures that we always use the latest allow toggle value inside of that stored function.If allowed toggle does not change however, then we don't recreate the function. And with that if I save this, if we go back, now, if I click Toggle paragraph nothing happens initially.However, if I now click on allow toggling,
+now we'll see that if I now click toggle paragraph, we do get our paragraph and all expected output.It's also worth noting of course, that for toggle paragraph,
+we see button running, but we only see it once.And that's actually our second button
+where react memo has no effect because we're not using useCallback on the allow toggle handler.
+We would see it twice if the button for a toggle paragraph would also be rendered.
+But that's not the case because our useCallback here ensures that we're not rebuilding this function every time we only did that once when allow toggle changed.
+Now, I know these are concepts that can be confusing.

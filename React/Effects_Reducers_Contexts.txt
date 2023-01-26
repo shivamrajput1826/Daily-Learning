@@ -29,7 +29,10 @@ UseReducers=>
 1)update a state which depends on another state because sometimes the dependent states does not have been updated 
 and it may give wrong values.
 2)When it is dependent on two or three states
-const[state,dispatch]=UseReducer(reducerFn,initialState,initFn);
+
+***const[state,dispatch]=UseReducer(reducerFn,initialState,initFn);
+
+
 state=>a state snapshot used in the component re-render/re-evaluation cycle
 dispatchFn=>a function that can be used to dispatch a new action(i.e trigger an update of the state)
 reducerfn=>(prevState,action)=>newState
@@ -256,5 +259,4 @@ Learning the rules of hook..
 1)Only call react hooks in react functions=>(react component functions and custom hooks)
 2)Only call react hooks at the top level(dont call them in nested functions or dont call them in any block statements)
 
-Forward refs=>
-useRef=> left....
+UseRef=>

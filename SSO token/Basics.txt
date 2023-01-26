@@ -1,0 +1,5 @@
+-->Single sign on is an authentication method that enables users to securely authenticate with multiple applications and websites by using one set of credentials...
+
+How does SSO work
+	1)SSO works based upon a trust relationship between a service provider(your application) and an identifier provider like one Login
+	2)

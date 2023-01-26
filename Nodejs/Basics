@@ -1,0 +1,25 @@
+Nodejs is a javascript runtime
+Javascript is a programming language used to manipulate dom, to manipulate the page which was loaded in the browser.
+Nodejs allows you to run the javascript code on the server(basically any machine) and add useful functionality to the js engine to do more useful stuff 
+It is used to run the js outside of the browser.. 
+Nodejs basically uses v8(name of js engine built by google that runs js in the browser)
+Engine basically compile (convert) js code to machine code 
+
+const fs= require('fs');
+fs.writeFileSync("hello.txt",'hello world')
+
+basically fs is a file system functionality which basically leverage the 
+And this method here will write a file to our harddrive.
+And the argument it wants is the path to the file, including the file name.
+And here we could name this hello dot text.
+And the the second argument is the content of that file.
+
+Creating a node server..
+
+Core modules...
+1)http
+2)https
+3)fs
+4)path=> helps in constructing paths so that path to file system can be used in any operating system not in mac or windows
+5)os
+

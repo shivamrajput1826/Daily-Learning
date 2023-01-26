@@ -58,7 +58,23 @@ const ErrorModal = (props) => {
 export default ErrorModal;
 >>>>>>>>Remember to use right naming convention
 
-React Refs=> If you want a read a value not manipulating the DOM, refs are better than state because in this scenirio
+React Refs=> 
+With refs, we can set up a connection
+between a HTML element which is being rendered in the end
+and our other JavaScript code.
+If you want a read a value not manipulating the DOM, refs are better than state because in this scenirio
+
+This ref value, which is being generated here always is an object,which always has a current prop
+and the current prop holds the actual value that ref is connected with.
+Now, by default, it's undefined but as soon as this code ran, because of this ref prop,
+the nameInputRef is connected to that input
+and hence, it's actually the input which is being stored as a value in the current prop.
+And what's being stored here really is the actual DOM node.
+So not some theoretical value or anything like that
+but the real DOM node,
+which you could now manipulate
+
+and do all kinds of things with.
 we dont have to write extra code..
 const AddUser = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");

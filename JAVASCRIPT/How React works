@@ -1,0 +1,12 @@
+1)React determine how the component tree currently look like and what it should look like..
+ReactDom receives the differences (i.e required changes)  and then manipulate the real DOM.
+Re-evaluating the components is not re-rendering the dom
+
+
+** React re-evalute whenever the ####props,state or context### changes.React execute the component functions and then changes in the real dom would be only the evaluated differences between the 
+two doms.
+
+whenever a state in a particular component change, the whole component re-render again..
+whenever a component get re-executed, all its child component get re-evaluated again..
+
+Preventing Unneccasary RE-evalution...

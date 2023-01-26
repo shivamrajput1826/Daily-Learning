@@ -1,0 +1,9 @@
+Bind allows you to create a new function from an existing function, change the new function's this context, and provide any arguments you want to call the new function with.
+
+function combineStrings(str1, str2) {
+  return str1 + " " + str2
+}
+
+var makeCool = combineStrings.bind(null, "Cool");
+
+makeCool("trick"); // "Cool trick"

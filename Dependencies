@@ -1,0 +1,33 @@
+Dependencies
+Dev dependencies consists of all the packages that are used in the project in its development phase not in the production or testing environment
+>>>>npm install <package_name> --save-dev
+
+Peer dependencies=>
+ In package.json file, there is an object called as peerDependencies and it consists of all the packages that are exactly required in the project or to the person who is downloading and the version numbers should also be the same.
+
+
+
+  A dependency is a library that a project needs to function effectively.	
+  DevDependencies are the packages a developer needs during development. 	
+  A peer dependency specifies that our package is compatible with a particular version of an npm package. 
+
+If a package doesn’t already exist in the node_modules directory, then it is automatically added. 	As you install a package, npm will automatically install the dev dependencies.	
+peerDependencies are not automatically installed. You need to manually modify your package.json file in order to add a Peer Dependency.
+
+These are the libraries you need when you run your code.	
+These dependencies may be needed at some point during the development process, but not during execution. 	
+Peer dependencies are only encountered when you publish your own package, that is, when you develop code that will be used by other programs. 
+
+Included in the final code bundle. 
+	Included in the final code bundle . 	
+	Can be included only when you are publishing your own package. 
+
+Dependencies can be added to your project by running :
+
+npm install <package_name>
+
+Dev dependencies can be added to your project by running :
+npm install <package_name> --save-dev
+
+Change the package.json file manually.
+

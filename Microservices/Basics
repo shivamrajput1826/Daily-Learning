@@ -1,2 +1,10 @@
 A single microservice contains all the routing,middlewares,business logic ,database access to implement one 
 feature of an app so that if all other features crashes,this feature remains there.
+==>> every service has its own database
+==>> Services will never,ever reach into another service database
+
+Why database per service
+1) We want each service to run independently of other services
+2) Database schema/structure might change unexpectedly.
+3) Some services might function more efficiently with different types of DB's (sql vs nosql) 
+
